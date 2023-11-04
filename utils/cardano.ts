@@ -1,8 +1,7 @@
-import { fetchBlockFrostApi } from "./lucid"
+import { fetchBlockFrostApi, getProjectId } from "./lucid"
 
 export const getAssets = async (address: string) => {
-
-    const apiValue = await fetchBlockFrostApi(); 
+    const projectId = getProjectId();
     var allNFTs: any = []
     var addressInfo = { nfts: allNFTs, balance: 0 }
     const data = await fetch(
@@ -12,7 +11,7 @@ export const getAssets = async (address: string) => {
                 // Your Blockfrost API key
                 // project_id: process.env.NEXT_PUBLIC_BLOCKFROST!,
                 // 'Content-Type': 'application/json'
-                project_id: apiValue.toString(),
+                project_id: projectId,
                 'Content-Type': 'application/json'
             }
         }
@@ -22,6 +21,8 @@ export const getAssets = async (address: string) => {
         // Handle error.
         console.log("error")
     }
+
+    console.log(data);
 
     const amount = data['amount']
     if (amount.length > 0) {

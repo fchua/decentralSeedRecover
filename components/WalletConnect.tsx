@@ -1,10 +1,8 @@
-import { Lucid, Blockfrost, C } from "lucid-cardano";
 import { useState, useEffect } from 'react';
 import { useStoreActions, useStoreState } from "../utils/store";
 import initLucid from "../utils/lucid";
 
 const WalletConnect = () => {
-    // const [availableWallets, setAvailableWallets] = useState<string[]>([])
     const walletStore = useStoreState(state => state.wallet)
     const setWallet = useStoreActions(actions => actions.setWallet)
     const availableWallets = useStoreState(state => state.availableWallets)
@@ -44,13 +42,13 @@ const WalletConnect = () => {
             if (window.cardano.nami) wallets.push('Nami')
             if (window.cardano.eternl) wallets.push('Eternl')
             if (window.cardano.flint) wallets.push('Flint')
+            if (window.cardano.gerowallet) wallets.push('Gero')
             loadWalletSession()
         }
         setAvailableWallets(wallets)
     }, [])
 
     return (
-        <>
             <div className="dropdown dropdown-end">
                 <label tabIndex={0} className="btn m-1">{connectedAddress != "" ? 'Connected' : 'Connect'}</label>
                 <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-base-300 rounded-box w-52">
@@ -59,7 +57,6 @@ const WalletConnect = () => {
                     )}
                 </ul>
             </div>
-        </>
     )
 }
 

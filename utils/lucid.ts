@@ -1,32 +1,18 @@
 import { Blockfrost, Lucid } from 'lucid-cardano';
-import { contr1Seed } from "./seed.tsx"
 
 const initLucid = async (wallet: string) => {
-//     const api = (await window.cardano[
-//         wallet.toLowerCase()
-//     ].enable())
-
-    const nami = await window.cardano.nami.enable();
-    // const eternl = window.cardano.eternl.enable();
-    // const gero = await window.cardano.gero.enable();
-
-    const apiValue = await fetchBlockFrostApi();  
-    
-    const lucid = await Lucid.new(
-        new Blockfrost('https://cardano-preprod.blockfrost.io/api/v0', apiValue.toString()) //process.env.NEXT_PUBLIC_BLOCKFROST as string),
-        ,'Preprod');
-    // const lucid = await Lucid.new(
-            // new Blockfrost("https://cardano-preview.blockfrost.io/api/v0", "previewY7wWn4mtcYHascUO7PyxeCXadkAkBVz2"),
-            // "Preview",
-          // );
-    // const lucid = await Lucid.new(
-    //         new Blockfrost('https://cardano-mainnet.blockfrost.io/api/v0', "mainneto2wd71NAi5sZMWDHUTXxgvMTEC6ciS2I") //process.env.NEXT_PUBLIC_BLOCKFROST as string),
-    //         ,'Mainnet')
-    //lucid.selectWallet(api)
-    lucid.selectWallet(nami)
-    // lucid.selectWalletFromSeed(contr1Seed)    // to use from seed
-    //setLucid(lucid)
+    console.log(`wallet = ${wallet}`);
+    const walletApi = await window.cardano[wallet.toLocaleLowerCase()].enable();
+    const url = 'https://cardano-preprod.blockfrost.io/api/v0';
+    const projectId = getProjectId();
+    const network = 'Preprod';
+    const lucid = await Lucid.new(new Blockfrost(url, projectId), network);
+    lucid.selectWallet(walletApi);
     return lucid;
+}
+
+export const getProjectId = () : string => {
+  return 'preprodav5tVxKEeXJoJt82FZTqds5osl34ePPB';
 }
 
 export const fetchBlockFrostApi = async () => {

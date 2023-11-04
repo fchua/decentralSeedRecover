@@ -6,7 +6,6 @@ import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { getAssets } from "../utils/cardano";
 import NftGrid from "../components/NftGrid";
-import initLucid from '../utils/lucid'
 
 const Home: NextPage = () => {
   const walletStore = useStoreState((state: any) => state.wallet)
@@ -15,13 +14,12 @@ const Home: NextPage = () => {
   const [secretData, setSecretData] = useState<any>(null);
 
   useEffect(() => {
-    //const lucid = initLucid(walletStore.name)
+    console.log(`Inside useEffect`)
     if (walletStore.address != "") {
       getAssets(walletStore.address)
         .then((res: any) => { setNftList(res.addressInfo.nfts) })
     }
   }, [walletStore.address])
-
 
   const fetchData = async () => {
     try {
